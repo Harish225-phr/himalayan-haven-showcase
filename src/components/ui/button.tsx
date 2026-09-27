@@ -16,6 +16,11 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        booking: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+        heroOutline: "border border-primary-foreground/70 text-primary-foreground hover:bg-primary-foreground/15",
+        light: "bg-background text-foreground hover:bg-background/85",
+        gallery: "bg-transparent text-foreground shadow-none",
+        lightbox: "bg-transparent text-primary-foreground hover:bg-primary-foreground/15",
       },
       size: {
         default: "h-9 px-4 py-2",

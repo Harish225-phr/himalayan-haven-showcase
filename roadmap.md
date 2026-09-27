@@ -1,0 +1,3 @@
+- [x] Add the supplied property photos and shared visual system.
+- [x] Build Home, Rooms, About, Amenities, Dining, Experiences, Gallery, Location and Contact pages.
+- [ ] Verify navigation, imagery, responsive layout and booking enquiry.
