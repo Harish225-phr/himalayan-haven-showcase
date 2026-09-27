@@ -7,8 +7,8 @@ import propertyGarden from '@/assets/property-garden.webp';
 import propertyNight from '@/assets/property-night.webp';
 import mountainGateway from '@/assets/mountain-gateway.webp';
 import terraceEvening from '@/assets/terrace-evening.webp';
-import standardRoom from '@/assets/standard-room.webp';
 import deluxeRoom from '@/assets/deluxe-room.webp';
+const standardRoom = deluxeRoom; // Fallback: standard-room.webp is missing
 import balconyRoom from '@/assets/balcony-room.webp';
 import gardenEvening from '@/assets/garden-evening.webp';
 
