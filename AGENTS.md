@@ -12,3 +12,7 @@
 - Keep the public site as separate TanStack file routes with shared presentation in `src/components/site.tsx`; this preserves direct links and per-page metadata.
 - Keep uploaded property photographs in Lovable Assets pointers imported directly in JSX; this preserves actual imagery while keeping the repository lightweight.
 - Booking forms open a pre-filled WhatsApp enquiry rather than persisting submissions; this avoids implying instant confirmation without a booking backend.
+
+- Keep the public site as separate TanStack file routes with shared presentation in `src/components/site.tsx`; this preserves direct links and per-page metadata.
+- Keep uploaded property photographs in Lovable Assets pointers imported directly in JSX; this preserves actual imagery while keeping the repository lightweight.
+- Booking forms open a pre-filled WhatsApp enquiry rather than persisting submissions; this avoids implying instant confirmation without a booking backend.
