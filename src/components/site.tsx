@@ -1,6 +1,6 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowRight, ArrowUpRight, Menu, X, Phone, MapPin, MessageCircle, Mountain, Wifi, Car, Flame, UtensilsCrossed, PawPrint, Sparkles, Sun, Heart, Coffee, Zap, Compass, Trees, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Menu, X, Phone, MapPin, MessageCircle, Mountain, Wifi, Car, Flame, UtensilsCrossed, PawPrint, Sparkles, Sun, Heart, Coffee, Zap, Compass, Trees, Check, ChevronLeft, ChevronRight, Plus, Snowflake, Leaf, CloudSun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollReveal, useScrollProgress, useParallax } from '@/hooks/use-scroll-reveal';
 import propertyDaylight from '@/assets/property-daylight.webp';
@@ -82,6 +82,19 @@ function HeroCarousel() {
   );
 }
 
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className={`faq-item ${open ? 'open' : ''}`}>
+      <div className="faq-summary" onClick={() => setOpen(!open)} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}>
+        <h3>{question}</h3>
+        <span className="faq-toggle"><Plus size={18} /></span>
+      </div>
+      <div className="faq-answer"><p>{answer}</p></div>
+    </div>
+  );
+}
+
 export function SiteLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -139,9 +152,19 @@ export function HomePage() {
       <div className="hero-bottom"><span>32°34' N &nbsp; 75°59' E</span><span>VILLAGE MANOLA · HIMACHAL PRADESH</span><span className="scroll-hint">SCROLL TO EXPLORE <span className="scroll-arrow" /></span></div>
     </section>
 
+    {/* Stats band */}
+    <section className="stats-band">
+      <div className="stats-grid">
+        <Reveal delay={0}><div className="stat-item"><div className="stat-number">2018</div><div className="stat-label">Hosting Since</div></div></Reveal>
+        <Reveal delay={100}><div className="stat-item"><div className="stat-number">3</div><div className="stat-label">Room Types</div></div></Reveal>
+        <Reveal delay={200}><div className="stat-item"><div className="stat-number">₹1,206</div><div className="stat-label">Starting / Night</div></div></Reveal>
+        <Reveal delay={300}><div className="stat-item"><div className="stat-number">7 km</div><div className="stat-label">From Banikhet</div></div></Reveal>
+      </div>
+    </section>
+
     <section className="intro-section section-space"><div className="container intro-grid">
       <Reveal delay={0}><div className="intro-image-wrap" ref={introParallaxRef}><img src={mountainGateway} alt="Mountain view beyond the entrance to Ecstasy Farms" loading="lazy"/><div className="image-caption">THE WAY TO SLOWER DAYS · MANOLA</div></div></Reveal>
-      <Reveal delay={150}><div className="intro-copy"><SectionLabel>WELCOME TO ECSTASY FARMS</SectionLabel><h2>A slower rhythm,<br/><em>a little closer</em><br/>to nature.</h2><p>Set in Village Manola along the Dalhousie–Chamba Road, Ecstasy Farms is a quiet place to pause. Far from the rush of town, the days unfold with mountain air, open views and the easy comfort of being looked after.</p><p>Whether you're travelling together, taking a breather as a couple or bringing your furry friend along, there's room here to simply be.</p><TextLink to="/about">Our story</TextLink></div></Reveal>
+      <Reveal delay={150}><div className="intro-copy"><SectionLabel>WELCOME TO ECSTASY FARMS</SectionLabel><h2>A slower rhythm,<br/><em>a little closer</em><br/>to nature.</h2><p>Set in Village Manola along the Dalhousie–Chamba Road, Ecstasy Farms is a quiet place to pause. Far from the rush of town, the days unfold with mountain air, open views and the easy comfort of being looked after.</p><p>Whether you're travelling together, taking a breather as a couple or bringing your furry friend along, there's room here to simply be.</p><p>Tucked away from the crowded town centre, the property sits among trees and open sky — a gentle reminder that some of the best moments happen when you're not in a hurry to go anywhere.</p><TextLink to="/about">Our story</TextLink></div></Reveal>
     </div></section>
 
     <section className="why-section section-space"><div className="container">
@@ -155,19 +178,49 @@ export function HomePage() {
     </div></section>
 
     <section className="rooms-section section-space"><div className="container">
-      <Reveal><div className="section-heading split-heading"><div><SectionLabel>REST COMES NATURALLY</SectionLabel><h2>Find your kind<br/>of <em>comfort.</em></h2></div><div><p>Thoughtful places to come back to, each with the quiet character of a stay in the hills.</p><TextLink to="/rooms">Explore all rooms</TextLink></div></div></Reveal>
+      <Reveal><div className="section-heading split-heading"><div><SectionLabel>REST COMES NATURALLY</SectionLabel><h2>Find your kind<br/>of <em>comfort.</em></h2></div><div><p>Thoughtful places to come back to, each with the quiet character of a stay in the hills. Three room types — from a cosy standard to a superior deluxe with private balcony — each suited for couples, families and groups.</p><TextLink to="/rooms">Explore all rooms</TextLink></div></div></Reveal>
       <RoomCards/>
       <Reveal delay={200}><div className="price-note">Rooms from ₹1,206/night* <span>· Rates may vary. Please enquire for current availability and pricing.</span></div></Reveal>
     </div></section>
 
     <section className="editorial-band"><div className="editorial-image"><img src={terraceEvening} alt="Terrace table prepared for a relaxed evening at Ecstasy Farms" loading="lazy"/></div><Reveal><div className="editorial-copy"><SectionLabel>THE GOOD PART OF STAYING IN</SectionLabel><h2>Gather around.<br/><em>Stay a while.</em></h2><p>Here, the best moments aren't scheduled. They happen over home-cooked food, unhurried conversation and evenings spent together on the terrace. Bonfire and BBQ can be arranged on request.</p><TextLink to="/dining">Discover dining</TextLink></div></Reveal></section>
 
+    {/* Host section */}
+    <section className="host-section section-space"><div className="container host-grid">
+      <Reveal delay={0}><div className="host-image-wrap"><img src={propertyDaylight} alt="Ecstasy Farms homestay property" loading="lazy"/><div className="host-since"><small>HOSTING SINCE</small><span>2018</span></div></div></Reveal>
+      <Reveal delay={150}><div className="host-copy"><SectionLabel>YOUR HOSTS</SectionLabel><h2>Looked after by<br/>people who <em>care.</em></h2><p>Ecstasy Farms has been hosted by Navdeep since 2018, with caretaking support from Sunny, Sunil and their family. Their warmth and attention are what make a stay here feel less like a booking and more like being welcomed into a home.</p><p>From arranging meals to helping plan your day, the team is always nearby — never in the way, always at hand when you need them.</p><div className="host-name">Navdeep</div><div className="host-role">Host · Since 2018</div></div></Reveal>
+    </div></section>
+
     <section className="nature-section section-space"><div className="container nature-grid">
       <Reveal delay={0}><div className="nature-copy"><SectionLabel>FOR EVERY MEMBER OF THE FAMILY</SectionLabel><h2>Good company<br/>has <em>four paws.</em></h2><p>Bring your furry companions along. With outdoor spaces and a welcoming, pet-friendly atmosphere, your time away can include the whole family.</p><TextLink to="/experiences">Explore experiences</TextLink></div></Reveal>
       <Reveal delay={150}><div className="nature-image"><img src={gardenEvening} alt="Green outdoor garden and seating area at Ecstasy Farms" loading="lazy"/></div></Reveal>
     </div></section>
 
+    {/* Seasons section */}
+    <section className="section-space"><div className="container">
+      <Reveal><div className="section-heading centered"><SectionLabel>WHEN TO VISIT</SectionLabel><h2>Every season<br/>has its own <em>magic.</em></h2><p>The hills change through the year — here's what to expect in each season.</p></div></Reveal>
+      <div className="seasons-grid">
+        <Reveal delay={0}><div className="season-card"><div className="season-icon"><Snowflake/></div><h3>Winter</h3><div className="season-months">DEC — FEB</div><p>Crisp mountain air and the possibility of snow. Cosy up indoors with warm meals and quiet evenings by the fire.</p></div></Reveal>
+        <Reveal delay={100}><div className="season-card"><div className="season-icon"><Leaf/></div><h3>Spring</h3><div className="season-months">MAR — APR</div><p>The hills come alive with greenery and flowers. Pleasant days and cool nights make it perfect for nature walks.</p></div></Reveal>
+        <Reveal delay={200}><div className="season-card"><div className="season-icon"><Sun/></div><h3>Summer</h3><div className="season-months">MAY — JUN</div><p>The busiest time for good reason — clear views, comfortable weather and the ideal escape from the plains.</p></div></Reveal>
+        <Reveal delay={300}><div className="season-card"><div className="season-icon"><CloudSun/></div><h3>Monsoon</h3><div className="season-months">JUL — SEP</div><p>Misty valleys, lush green surroundings and the sound of rain on the roof. A deeply peaceful time to disconnect.</p></div></Reveal>
+      </div>
+    </div></section>
+
     <section className="location-teaser" ref={locationParallaxRef}><img src={propertyGarden} alt="Ecstasy Farms among trees and garden greenery" loading="lazy"/><div className="hero-shade"/><div className="container location-teaser-content"><Reveal><SectionLabel>THE ROAD LESS HURRIED</SectionLabel><h2>A little away.<br/><em>Right where you need to be.</em></h2><p>Village Manola · Approximately 7 km from Banikhet and 15 km from Dalhousie town.</p><TextLink to="/location">Find your way here</TextLink></Reveal></div></section>
+
+    {/* FAQ section */}
+    <section className="faq-section section-space"><div className="container">
+      <Reveal><div className="section-heading centered"><SectionLabel>GOOD TO KNOW</SectionLabel><h2>Questions, <em>answered.</em></h2></div></Reveal>
+      <div className="faq-list">
+        <Reveal delay={0}><FaqItem question="Is Ecstasy Farms pet-friendly?" answer="Yes. Pets are welcome at Ecstasy Farms. There is outdoor space for them to enjoy, and you may even meet the resident dogs, Bruno and Bagheera." /></Reveal>
+        <Reveal delay={60}><FaqItem question="How far is the property from Dalhousie town?" answer="Ecstasy Farms is located in Village Manola on the Dalhousie–Chamba Road, approximately 7 km from Banikhet and 15 km from Dalhousie town — away from the crowded centre, but easy to reach." /></Reveal>
+        <Reveal delay={120}><FaqItem question="What type of food is available?" answer="Fresh, hygienic home-cooked meals are prepared with care. Menus can be customized to your preferences, and bonfire and BBQ arrangements are available on request." /></Reveal>
+        <Reveal delay={180}><FaqItem question="Can I book directly or do I need to enquire first?" answer="Booking is by enquiry. You can reach out via WhatsApp or phone to check availability and current rates. This helps us give you the most accurate information for your dates." /></Reveal>
+        <Reveal delay={240}><FaqItem question="What amenities are available at the property?" answer="Free Wi-Fi, power backup, parking, mountain and valley views, customizable meals, vehicle rental assistance, and bonfire and BBQ on request." /></Reveal>
+        <Reveal delay={300}><FaqItem question="Which room types are available?" answer="Three room types: Standard Room, Deluxe AC Room with Terrace, and Superior Deluxe Room with Balcony. Starting from ₹1,206/night. Rates vary by room and season." /></Reveal>
+      </div>
+    </div></section>
 
     <ClosingCTA/>
   </>;
