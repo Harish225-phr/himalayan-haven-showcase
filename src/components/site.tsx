@@ -1,15 +1,19 @@
 import { Link, useRouterState } from '@tanstack/react-router';
-import { useEffect, useState, type ReactNode } from 'react';
-import { ArrowRight, ArrowUpRight, Menu, X, Phone, MapPin, MessageCircle, Mountain, Wifi, Car, Flame, UtensilsCrossed, PawPrint, Sparkles, Sun, Heart, Coffee, Zap, Compass, Trees, Check, ChevronLeft, ChevronRight, Plus, Snowflake, Leaf, CloudSun } from 'lucide-react';
+import { useEffect, useState, useRef, type ReactNode } from 'react';
+import { ArrowRight, ArrowUpRight, Menu, X, Phone, MapPin, MessageCircle, Mountain, Wifi, Car, Flame, UtensilsCrossed, PawPrint, Sparkles, Sun, Heart, Coffee, Zap, Compass, Trees, Check, ChevronLeft, ChevronRight, Plus, Snowflake, Leaf, CloudSun, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollReveal, useScrollProgress, useParallax } from '@/hooks/use-scroll-reveal';
+import bannerVideo from '@/assets/Banner-video.mp4';
+import loobyImg from '@/assets/looby.png';
+import fernitureImg from '@/assets/ferniture.png';
+import looby2Img from '@/assets/looby2.png';
 import propertyDaylight from '@/assets/property-daylight.webp';
 import propertyGarden from '@/assets/property-garden.webp';
 import propertyNight from '@/assets/property-night.webp';
 import mountainGateway from '@/assets/mountain-gateway.webp';
 import terraceEvening from '@/assets/terrace-evening.webp';
 import deluxeRoom from '@/assets/deluxe-room.webp';
-const standardRoom = deluxeRoom; // Fallback: standard-room.webp is missing
+const standardRoom = fernitureImg; // Authentic homestay bedroom interior photo
 import balconyRoom from '@/assets/balcony-room.webp';
 import gardenEvening from '@/assets/garden-evening.webp';
 
@@ -46,6 +50,86 @@ function Reveal({ children, delay = 0, y = 40, className = '' }: { children: Rea
       style={{ '--reveal-delay': `${delay}ms`, '--reveal-y': `${y}px` } as React.CSSProperties}
     >
       {children}
+    </div>
+  );
+}
+
+function HeroVideoBanner() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          setIsPlaying(false);
+        });
+    }
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
+
+  return (
+    <div className="hero-video-container" aria-label="Ecstasy Farms Dalhousie Video Banner">
+      <video
+        ref={videoRef}
+        className="hero-video-element"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster={propertyDaylight}
+        aria-hidden="true"
+      >
+        <source src={bannerVideo} type="video/mp4" />
+      </video>
+
+      <div className="hero-video-controls" aria-label="Banner video controls">
+        <button
+          type="button"
+          onClick={togglePlay}
+          className="hero-video-ctrl-btn"
+          aria-label={isPlaying ? 'Pause banner video' : 'Play banner video'}
+          title={isPlaying ? 'Pause video' : 'Play video'}
+        >
+          {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+          <span>{isPlaying ? 'Pause' : 'Play'}</span>
+        </button>
+        <button
+          type="button"
+          onClick={toggleMute}
+          className="hero-video-ctrl-btn"
+          aria-label={isMuted ? 'Unmute video sound' : 'Mute video sound'}
+          title={isMuted ? 'Unmute video sound' : 'Mute video sound'}
+        >
+          {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+          <span>{isMuted ? 'Muted' : 'Sound'}</span>
+        </button>
+      </div>
     </div>
   );
 }
@@ -146,7 +230,7 @@ export function HomePage() {
   return <>
     <section className="home-hero">
       <div ref={heroParallaxRef} className="home-hero-bg">
-        <HeroCarousel />
+        <HeroVideoBanner />
       </div>
       <div className="hero-shade"/>
       <div className="container home-hero-content">
@@ -244,12 +328,14 @@ function Experience({image,title,text}:{image:string;title:string;text:string}) 
 const galleryPhotos = [
   { src: propertyDaylight, alt: 'Ecstasy Farms property in daylight with red roof and pine trees', category: 'PROPERTY' },
   { src: balconyRoom, alt: 'Superior Deluxe Room with balcony', category: 'ROOMS' },
+  { src: loobyImg, alt: 'Warm indoor sitting lounge and lobby with mountain window view', category: 'LOUNGE' },
   { src: mountainGateway, alt: 'Himalayan valley view from the property gateway', category: 'VIEWS' },
+  { src: fernitureImg, alt: 'Standard Room interior with bed, wardrobe and floral window view', category: 'ROOMS' },
   { src: terraceEvening, alt: 'Evening dining arrangement on the terrace', category: 'DINING & OUTDOORS' },
+  { src: looby2Img, alt: 'Deluxe room with rich wood finishes, bolster cushion and scenic outlook', category: 'ROOMS' },
   { src: deluxeRoom, alt: 'Deluxe AC Room interior', category: 'ROOMS' },
   { src: propertyGarden, alt: 'Property surrounded by garden and trees', category: 'NATURE' },
   { src: gardenEvening, alt: 'Garden with outdoor seating at night', category: 'OUTDOORS' },
-  { src: standardRoom, alt: 'Standard Room interior', category: 'ROOMS' },
   { src: propertyNight, alt: 'Ecstasy Farms exterior at night', category: 'PROPERTY' },
 ];
 export function GalleryPage() { const [active,setActive] = useState<number | null>(null); useEffect(() => { if(active === null) return; const handle = (e: KeyboardEvent) => { if(e.key === 'Escape') setActive(null); if(e.key === 'ArrowRight') setActive((active + 1) % galleryPhotos.length); if(e.key === 'ArrowLeft') setActive((active - 1 + galleryPhotos.length) % galleryPhotos.length); }; window.addEventListener('keydown',handle); return () => window.removeEventListener('keydown',handle); },[active]); return <><PageHero label="THE GALLERY" title="A glimpse of the good life." description="Little moments from our corner of the Himalayas." image={propertyDaylight} alt="Ecstasy Farms Dalhousie property exterior"/><section className="section-space"><div className="container"><Reveal><div className="section-heading centered"><SectionLabel>TAKE A LOOK AROUND</SectionLabel><h2>See yourself <em>here.</em></h2></div></Reveal><div className="gallery-grid">{galleryPhotos.map((photo,i) => <Reveal key={photo.src} delay={(i % 3) * 80}><Button variant="gallery" className={`gallery-item gallery-item-${i}`} onClick={() => setActive(i)} aria-label={`View photo: ${photo.alt}`}><img src={photo.src} alt={photo.alt} loading="lazy"/><span>{photo.category}<ArrowUpRight size={18}/></span></Button></Reveal>)}</div><p className="gallery-note">The gallery features actual photographs of Ecstasy Farms. Food and pet photographs have not been provided.</p></div></section>{active !== null && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onClick={() => setActive(null)}><Button variant="lightbox" size="icon" className="lightbox-close" onClick={() => setActive(null)} aria-label="Close viewer"><X/></Button><Button variant="lightbox" size="icon" className="lightbox-prev" onClick={(e) => {e.stopPropagation();setActive((active - 1 + galleryPhotos.length) % galleryPhotos.length)}} aria-label="Previous photo"><ChevronLeft/></Button><img src={galleryPhotos[active].src} alt={galleryPhotos[active].alt} onClick={e => e.stopPropagation()}/><Button variant="lightbox" size="icon" className="lightbox-next" onClick={(e) => {e.stopPropagation();setActive((active + 1) % galleryPhotos.length)}} aria-label="Next photo"><ChevronRight/></Button><span className="lightbox-count">{active + 1} / {galleryPhotos.length}</span></div>}<ClosingCTA/></>; }
